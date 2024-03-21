@@ -8,20 +8,20 @@ number:
 date:
 consensus: true
 v: 3
-area: AREA
-workgroup: WG Working Group
+# area: AREA
+# workgroup: WG Working Group
 keyword:
  - RoQ
  - qlog
  - RTP
  - QUIC
 venue:
-  group: WG
-  type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+#  group: WG
+#  type: Working Group
+#  mail: WG@example.com
+#  arch: https://example.com/WG
+  github: "mengelbart/draft-engelbart-qlog-roq-events"
+  latest: "https://mengelbart.github.io/draft-engelbart-qlog-roq-events/draft-engelbart-qlog-roq-events.html"
 
 author:
  -
