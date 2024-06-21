@@ -68,8 +68,6 @@ formats. The choice of format is an implementation decision.
 
 # Overview
 
-**TODO: HTTP/3 events also mention a trigger here, but not elsewhere in the document?**
-
 This document describes how RoQ can be expressed in qlog using the schema
 defined in {{!I-D.draft-ietf-quic-qlog-main-schema}}. RoQ events are defined
 with a category, a name (the concatenation of "category" and "event"), an
@@ -105,8 +103,6 @@ event type that is defined in this specification.
 | Name value                  | Importance | Definition                  |
 | --------------------------- | ---------- | --------------------------- |
 | roq:stream_opened           | Base       | {{stream-opened}}           |
-| roq:stream_closed           | Base       | {{stream-closed}}           |
-| roq:stream_reset            | Base       | {{stream-reset}}            |
 | roq:stream_packet_created   | Core       | {{stream-packet-created}}   |
 | roq:stream_packet_parsed    | Core       | {{stream-packet-parsed}}    |
 | roq:datagram_packet_created | Core       | {{datagram-packet-created}} |
@@ -121,8 +117,6 @@ RoQ events extend the `$ProtocolEventData` extension point defined in
 
 ~~~ cddl
 RoQEventData = RoQStreamOpened /
-               RoQStreamClosed /
-               RoQStreamReset /
                RoQStreamPacketCreated /
                RoQStreamPacketParsed /
                RoQDatagramPacketCreated /
@@ -149,37 +143,6 @@ RoQStreamOpened = {
 }
 ~~~
 {: #roq-stream-opened-def title="RoQStreamOpened definition" }
-
-## RoQ Stream Closed {#stream-closed}
-
-The `stream_closed` event is emitted when a QUIC stream for sending RoQ packets
-is closed, i.e., a sending stream reached the *Data Recvd* state or a receiving
-stream reached the *Data Read* state; see {{Section 3 of !RFC9000}}. It has Base
-importance level; see {{Section 9.2 of !I-D.draft-ietf-quic-qlog-main-schema}}.
-
-~~~ cddl
-RoQStreamClosed = {
-    flow_id: uint64
-    ?stream_id: uint64
-}
-~~~
-{: #roq-stream-closed-def title="RoQStreamClosed definition" }
-
-## RoQ Stream Reset {#stream-reset}
-
-The `stream_reset` event is emitted when a QUIC stream for sending RoQ packets
-is reset, i.e., a sending stream reached the *Reset Recvd* state or a receiving
-stream reached the *Reset Read* state; see {{Section 3 of !RFC9000}}. It has
-Base importance level; see {{Section 9.2 of
-!I-D.draft-ietf-quic-qlog-main-schema}}.
-
-~~~ cddl
-RoQStreamReset = {
-    flow_id: uint64
-    ?stream_id: uint64
-}
-~~~
-{: #roq-stream-reset-def title="RoQStreamReset definition" }
 
 ## RoQ Stream Packet Created {#stream-packet-created}
 
@@ -300,4 +263,5 @@ TODO
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
+The authors would like to thank Lucas Pardue for their valuable comments and
+suggestions contributing to this document.
