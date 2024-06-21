@@ -139,7 +139,7 @@ packets is opened. It has Base importance level; see {{Section 9.2 of
 ~~~ cddl
 RoQStreamOpened = {
     flow_id: uint64
-    ?stream_id: uint64
+    stream_id: uint64
 }
 ~~~
 {: #roq-stream-opened-def title="RoQStreamOpened definition" }
@@ -157,7 +157,7 @@ layer. For that, see the `stream_data_moved` event in
 ~~~ cddl
 RoQStreamPacketCreated = {
     ~RoQPacket
-    ?stream_id: uint64
+    stream_id: uint64
 }
 ~~~
 {: #roq-stream-packet-created-def title="RoQStreamPacketCreated definition" }
@@ -175,7 +175,7 @@ QUIC layer. For that see `stream_data_moved` event in
 ~~~ cddl
 RoQStreamPacketParsed = {
     ~RoQPacket
-    ?stream_id: uint64
+    stream_id: uint64
 }
 ~~~
 {: #roq-stream-packet-parsed-def title="RoQStreamPacketParsed definition" }
