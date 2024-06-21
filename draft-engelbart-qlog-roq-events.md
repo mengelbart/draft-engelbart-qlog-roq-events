@@ -28,6 +28,10 @@ author:
     fullname: Mathis Engelbart
     organization: Technical University of Munich
     email: mathis.engelbart@gmail.com
+ -
+    name: Jörg Ott
+    organization: Technical University of Munich
+    email: ott@in.tum.de
 
 normative:
 
