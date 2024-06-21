@@ -71,12 +71,10 @@ Table of Contents
    4.  RoQ Event Overview
    5.  RoQ Events
      5.1.  RoQ Stream Opened
-     5.2.  RoQ Stream Closed
-     5.3.  RoQ Stream Reset
-     5.4.  RoQ Stream Packet Created
-     5.5.  RoQ Stream Packet Parsed
-     5.6.  RoQ Datagram Packet Created
-     5.7.  RoQ Datagram Packet Parsed
+     5.2.  RoQ Stream Packet Created
+     5.3.  RoQ Stream Packet Parsed
+     5.4.  RoQ Datagram Packet Created
+     5.5.  RoQ Datagram Packet Parsed
    6.  RoQ Data Field Definitions
      6.1.  RoQ Packet
      6.2.  RoQ Application Error
@@ -116,9 +114,6 @@ Table of Contents
    decision.
 
 3.  Overview
-
-   *TODO: HTTP/3 events also mention a trigger here, but not elsewhere
-   in the document?*
 
    This document describes how RoQ can be expressed in qlog using the
    schema defined in [I-D.draft-ietf-quic-qlog-main-schema].  RoQ events
@@ -161,17 +156,13 @@ Table of Contents
         +=============================+============+=============+
         | roq:stream_opened           | Base       | Section 5.1 |
         +-----------------------------+------------+-------------+
-        | roq:stream_closed           | Base       | Section 5.2 |
+        | roq:stream_packet_created   | Core       | Section 5.2 |
         +-----------------------------+------------+-------------+
-        | roq:stream_reset            | Base       | Section 5.3 |
+        | roq:stream_packet_parsed    | Core       | Section 5.3 |
         +-----------------------------+------------+-------------+
-        | roq:stream_packet_created   | Core       | Section 5.4 |
+        | roq:datagram_packet_created | Core       | Section 5.4 |
         +-----------------------------+------------+-------------+
-        | roq:stream_packet_parsed    | Core       | Section 5.5 |
-        +-----------------------------+------------+-------------+
-        | roq:datagram_packet_created | Core       | Section 5.6 |
-        +-----------------------------+------------+-------------+
-        | roq:datagram_packet_parsed  | Core       | Section 5.7 |
+        | roq:datagram_packet_parsed  | Core       | Section 5.5 |
         +-----------------------------+------------+-------------+
 
                            Table 1: RoQ Events
@@ -182,8 +173,6 @@ Table of Contents
    [I-D.draft-ietf-quic-qlog-main-schema].
 
    RoQEventData = RoQStreamOpened /
-                  RoQStreamClosed /
-                  RoQStreamReset /
                   RoQStreamPacketCreated /
                   RoQStreamPacketParsed /
                   RoQDatagramPacketCreated /
@@ -206,42 +195,12 @@ Table of Contents
 
    RoQStreamOpened = {
        flow_id: uint64
-       ?stream_id: uint64
+       stream_id: uint64
    }
 
                     Figure 2: RoQStreamOpened definition
 
-5.2.  RoQ Stream Closed
-
-   The stream_closed event is emitted when a QUIC stream for sending RoQ
-   packets is closed, i.e., a sending stream reached the _Data Recvd_
-   state or a receiving stream reached the _Data Read_ state; see
-   Section 3 of [RFC9000].  It has Base importance level; see
-   Section 9.2 of [I-D.draft-ietf-quic-qlog-main-schema].
-
-   RoQStreamClosed = {
-       flow_id: uint64
-       ?stream_id: uint64
-   }
-
-                    Figure 3: RoQStreamClosed definition
-
-5.3.  RoQ Stream Reset
-
-   The stream_reset event is emitted when a QUIC stream for sending RoQ
-   packets is reset, i.e., a sending stream reached the _Reset Recvd_
-   state or a receiving stream reached the _Reset Read_ state; see
-   Section 3 of [RFC9000].  It has Base importance level; see
-   Section 9.2 of [I-D.draft-ietf-quic-qlog-main-schema].
-
-   RoQStreamReset = {
-       flow_id: uint64
-       ?stream_id: uint64
-   }
-
-                    Figure 4: RoQStreamReset definition
-
-5.4.  RoQ Stream Packet Created
+5.2.  RoQ Stream Packet Created
 
    The stream_packet_created event is emitted when a RoQ packet to be
    sent on a QUIC stream is created.  It has Core importance level; see
@@ -253,12 +212,12 @@ Table of Contents
 
    RoQStreamPacketCreated = {
        ~RoQPacket
-       ?stream_id: uint64
+       stream_id: uint64
    }
 
-                Figure 5: RoQStreamPacketCreated definition
+                Figure 3: RoQStreamPacketCreated definition
 
-5.5.  RoQ Stream Packet Parsed
+5.3.  RoQ Stream Packet Parsed
 
    The stream_packet_parsed event is emitted when a RoQ packet received
    from a QUIC stream is parsed.  It has Core importance level; see
@@ -270,12 +229,12 @@ Table of Contents
 
    RoQStreamPacketParsed = {
        ~RoQPacket
-       ?stream_id: uint64
+       stream_id: uint64
    }
 
-                 Figure 6: RoQStreamPacketParsed definition
+                 Figure 4: RoQStreamPacketParsed definition
 
-5.6.  RoQ Datagram Packet Created
+5.4.  RoQ Datagram Packet Created
 
    The roq_datagram_packet_created event is emitted when a RoQ packet to
    be sent in a QUIC Datagram is created.  It has Core importance level;
@@ -289,9 +248,9 @@ Table of Contents
        ~RoQPacket
    }
 
-               Figure 7: RoQDatagramPacketCreated definition
+               Figure 5: RoQDatagramPacketCreated definition
 
-5.7.  RoQ Datagram Packet Parsed
+5.5.  RoQ Datagram Packet Parsed
 
    The datagram_packet_parsed event is emitted when a RoQ packet
    received in a QUIC Datagram is parsed.  It has Core importance level;
@@ -305,7 +264,7 @@ Table of Contents
        ~RoQPacket
    }
 
-                Figure 8: RoQDatagramPacketParsed definition
+                Figure 6: RoQDatagramPacketParsed definition
 
 6.  RoQ Data Field Definitions
 
@@ -318,7 +277,7 @@ Table of Contents
      length: uint64
    }
 
-                       Figure 9: RoQPacket definition
+                       Figure 7: RoQPacket definition
 
 6.2.  RoQ Application Error
 
@@ -331,7 +290,7 @@ Table of Contents
                          "roq_unknown_flow_id_error" /
                          "roq_expectation_unmet_error"
 
-                 Figure 10: RoQApplicationError definition
+                  Figure 8: RoQApplicationError definition
 
    The RoQApplicationError extends the general $ApplicationError
    definition in the qlog QUIC definition, see
@@ -387,14 +346,10 @@ Table of Contents
               JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
               June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
 
-   [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
-              Multiplexed and Secure Transport", RFC 9000,
-              DOI 10.17487/RFC9000, May 2021,
-              <https://www.rfc-editor.org/rfc/rfc9000>.
-
 Acknowledgments
 
-   TODO acknowledge.
+   The authors would like to thank Lucas Pardue for their valuable
+   comments and suggestions contributing to this document.
 
 Author's Address
 

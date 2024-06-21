@@ -1154,22 +1154,16 @@ events can then be embedded in the higher level schema defined in
                 <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-roq-stream-opened" class="internal xref">RoQ Stream Opened</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-roq-stream-closed" class="internal xref">RoQ Stream Closed</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-roq-stream-packet-created" class="internal xref">RoQ Stream Packet Created</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
-                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-roq-stream-reset" class="internal xref">RoQ Stream Reset</a></p>
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-roq-stream-packet-parsed" class="internal xref">RoQ Stream Packet Parsed</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4">
-                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-roq-stream-packet-created" class="internal xref">RoQ Stream Packet Created</a></p>
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-roq-datagram-packet-created" class="internal xref">RoQ Datagram Packet Created</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.5">
-                <p id="section-toc.1-1.5.2.5.1"><a href="#section-5.5" class="auto internal xref">5.5</a>.  <a href="#name-roq-stream-packet-parsed" class="internal xref">RoQ Stream Packet Parsed</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.6">
-                <p id="section-toc.1-1.5.2.6.1"><a href="#section-5.6" class="auto internal xref">5.6</a>.  <a href="#name-roq-datagram-packet-created" class="internal xref">RoQ Datagram Packet Created</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.7">
-                <p id="section-toc.1-1.5.2.7.1"><a href="#section-5.7" class="auto internal xref">5.7</a>.  <a href="#name-roq-datagram-packet-parsed" class="internal xref">RoQ Datagram Packet Parsed</a></p>
+                <p id="section-toc.1-1.5.2.5.1"><a href="#section-5.5" class="auto internal xref">5.5</a>.  <a href="#name-roq-datagram-packet-parsed" class="internal xref">RoQ Datagram Packet Parsed</a></p>
 </li>
             </ul>
 </li>
@@ -1239,13 +1233,12 @@ formats. The choice of format is an implementation decision.<a href="#section-2-
       <h2 id="name-overview">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-overview" class="section-name selfRef">Overview</a>
       </h2>
-<p id="section-3-1"><strong>TODO: HTTP/3 events also mention a trigger here, but not elsewhere in the document?</strong><a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">This document describes how RoQ can be expressed in qlog using the schema
+<p id="section-3-1">This document describes how RoQ can be expressed in qlog using the schema
 defined in <span>[<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>. RoQ events are defined
 with a category, a name (the concatenation of "category" and "event"), an
-"importance", and "data" fields.<a href="#section-3-2" class="pilcrow">¶</a></p>
-<p id="section-3-3">When any event from this document is included in a qlog trace, the
-"protocol_type" qlog array field <span class="bcp14">MUST</span> contain an entry with the value "RoQ".<a href="#section-3-3" class="pilcrow">¶</a></p>
+"importance", and "data" fields.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">When any event from this document is included in a qlog trace, the
+"protocol_type" qlog array field <span class="bcp14">MUST</span> contain an entry with the value "RoQ".<a href="#section-3-2" class="pilcrow">¶</a></p>
 <div id="usage-with-quic">
 <section id="section-3.1">
         <h3 id="name-usage-with-quic">
@@ -1297,45 +1290,31 @@ event type that is defined in this specification.<a href="#section-4-3" class="p
 </td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">roq:stream_closed</td>
-            <td class="text-left" rowspan="1" colspan="1">Base</td>
-            <td class="text-left" rowspan="1" colspan="1">
-              <a href="#stream-closed" class="auto internal xref">Section 5.2</a>
-</td>
-          </tr>
-          <tr>
-            <td class="text-left" rowspan="1" colspan="1">roq:stream_reset</td>
-            <td class="text-left" rowspan="1" colspan="1">Base</td>
-            <td class="text-left" rowspan="1" colspan="1">
-              <a href="#stream-reset" class="auto internal xref">Section 5.3</a>
-</td>
-          </tr>
-          <tr>
             <td class="text-left" rowspan="1" colspan="1">roq:stream_packet_created</td>
             <td class="text-left" rowspan="1" colspan="1">Core</td>
             <td class="text-left" rowspan="1" colspan="1">
-              <a href="#stream-packet-created" class="auto internal xref">Section 5.4</a>
+              <a href="#stream-packet-created" class="auto internal xref">Section 5.2</a>
 </td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">roq:stream_packet_parsed</td>
             <td class="text-left" rowspan="1" colspan="1">Core</td>
             <td class="text-left" rowspan="1" colspan="1">
-              <a href="#stream-packet-parsed" class="auto internal xref">Section 5.5</a>
+              <a href="#stream-packet-parsed" class="auto internal xref">Section 5.3</a>
 </td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">roq:datagram_packet_created</td>
             <td class="text-left" rowspan="1" colspan="1">Core</td>
             <td class="text-left" rowspan="1" colspan="1">
-              <a href="#datagram-packet-created" class="auto internal xref">Section 5.6</a>
+              <a href="#datagram-packet-created" class="auto internal xref">Section 5.4</a>
 </td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">roq:datagram_packet_parsed</td>
             <td class="text-left" rowspan="1" colspan="1">Core</td>
             <td class="text-left" rowspan="1" colspan="1">
-              <a href="#datagram-packet-parsed" class="auto internal xref">Section 5.7</a>
+              <a href="#datagram-packet-parsed" class="auto internal xref">Section 5.5</a>
 </td>
           </tr>
         </tbody>
@@ -1355,8 +1334,6 @@ event type that is defined in this specification.<a href="#section-4-3" class="p
         <div class="lang-cddl sourcecode" id="section-5-2.1">
 <pre>
 RoQEventData = RoQStreamOpened /
-               RoQStreamClosed /
-               RoQStreamReset /
                RoQStreamPacketCreated /
                RoQStreamPacketParsed /
                RoQDatagramPacketCreated /
@@ -1385,7 +1362,7 @@ packets is opened. It has Base importance level; see <span><a href="https://data
 <pre>
 RoQStreamOpened = {
     flow_id: uint64
-    ?stream_id: uint64
+    stream_id: uint64
 }
 </pre>
 </div>
@@ -1395,153 +1372,103 @@ RoQStreamOpened = {
 </div>
 </section>
 </div>
-<div id="stream-closed">
+<div id="stream-packet-created">
 <section id="section-5.2">
-        <h3 id="name-roq-stream-closed">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-roq-stream-closed" class="section-name selfRef">RoQ Stream Closed</a>
+        <h3 id="name-roq-stream-packet-created">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-roq-stream-packet-created" class="section-name selfRef">RoQ Stream Packet Created</a>
         </h3>
-<p id="section-5.2-1">The <code>stream_closed</code> event is emitted when a QUIC stream for sending RoQ packets
-is closed, i.e., a sending stream reached the <em>Data Recvd</em> state or a receiving
-stream reached the <em>Data Read</em> state; see <span><a href="https://rfc-editor.org/rfc/rfc9000#section-3" class="relref">Section 3</a> of [<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>. It has Base
-importance level; see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-qlog-main-schema-08#section-9.2" class="relref">Section 9.2</a> of [<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<span id="name-roqstreamclosed-definition"></span><div id="roq-stream-closed-def">
+<p id="section-5.2-1">The <code>stream_packet_created</code> event is emitted when a RoQ packet to be sent on a
+QUIC stream is created. It has Core importance level; see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-qlog-main-schema-08#section-9.2" class="relref">Section 9.2</a> of [<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">This event is not necessarily the same as when the packet is passed to the QUIC
+layer. For that, see the <code>stream_data_moved</code> event in
+<span>[<a href="#I-D.draft-ietf-quic-qlog-quic-events" class="cite xref">I-D.draft-ietf-quic-qlog-quic-events</a>]</span>.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<span id="name-roqstreampacketcreated-defi"></span><div id="roq-stream-packet-created-def">
 <figure id="figure-3">
-          <div class="lang-cddl sourcecode" id="section-5.2-2.1">
+          <div class="lang-cddl sourcecode" id="section-5.2-3.1">
 <pre>
-RoQStreamClosed = {
-    flow_id: uint64
-    ?stream_id: uint64
+RoQStreamPacketCreated = {
+    ~RoQPacket
+    stream_id: uint64
 }
 </pre>
 </div>
 <figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
-<a href="#name-roqstreamclosed-definition" class="selfRef">RoQStreamClosed definition</a>
-          </figcaption></figure>
-</div>
-</section>
-</div>
-<div id="stream-reset">
-<section id="section-5.3">
-        <h3 id="name-roq-stream-reset">
-<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-roq-stream-reset" class="section-name selfRef">RoQ Stream Reset</a>
-        </h3>
-<p id="section-5.3-1">The <code>stream_reset</code> event is emitted when a QUIC stream for sending RoQ packets
-is reset, i.e., a sending stream reached the <em>Reset Recvd</em> state or a receiving
-stream reached the <em>Reset Read</em> state; see <span><a href="https://rfc-editor.org/rfc/rfc9000#section-3" class="relref">Section 3</a> of [<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>. It has
-Base importance level; see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-qlog-main-schema-08#section-9.2" class="relref">Section 9.2</a> of [<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
-<span id="name-roqstreamreset-definition"></span><div id="roq-stream-reset-def">
-<figure id="figure-4">
-          <div class="lang-cddl sourcecode" id="section-5.3-2.1">
-<pre>
-RoQStreamReset = {
-    flow_id: uint64
-    ?stream_id: uint64
-}
-</pre>
-</div>
-<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
-<a href="#name-roqstreamreset-definition" class="selfRef">RoQStreamReset definition</a>
-          </figcaption></figure>
-</div>
-</section>
-</div>
-<div id="stream-packet-created">
-<section id="section-5.4">
-        <h3 id="name-roq-stream-packet-created">
-<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-roq-stream-packet-created" class="section-name selfRef">RoQ Stream Packet Created</a>
-        </h3>
-<p id="section-5.4-1">The <code>stream_packet_created</code> event is emitted when a RoQ packet to be sent on a
-QUIC stream is created. It has Core importance level; see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-qlog-main-schema-08#section-9.2" class="relref">Section 9.2</a> of [<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
-<p id="section-5.4-2">This event is not necessarily the same as when the packet is passed to the QUIC
-layer. For that, see the <code>stream_data_moved</code> event in
-<span>[<a href="#I-D.draft-ietf-quic-qlog-quic-events" class="cite xref">I-D.draft-ietf-quic-qlog-quic-events</a>]</span>.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
-<span id="name-roqstreampacketcreated-defi"></span><div id="roq-stream-packet-created-def">
-<figure id="figure-5">
-          <div class="lang-cddl sourcecode" id="section-5.4-3.1">
-<pre>
-RoQStreamPacketCreated = {
-    ~RoQPacket
-    ?stream_id: uint64
-}
-</pre>
-</div>
-<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
 <a href="#name-roqstreampacketcreated-defi" class="selfRef">RoQStreamPacketCreated definition</a>
           </figcaption></figure>
 </div>
 </section>
 </div>
 <div id="stream-packet-parsed">
-<section id="section-5.5">
+<section id="section-5.3">
         <h3 id="name-roq-stream-packet-parsed">
-<a href="#section-5.5" class="section-number selfRef">5.5. </a><a href="#name-roq-stream-packet-parsed" class="section-name selfRef">RoQ Stream Packet Parsed</a>
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-roq-stream-packet-parsed" class="section-name selfRef">RoQ Stream Packet Parsed</a>
         </h3>
-<p id="section-5.5-1">The <code>stream_packet_parsed</code> event is emitted when a RoQ packet received from a
-QUIC stream is parsed. It has Core importance level; see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-qlog-main-schema-08#section-92." class="relref">Section 92.</a> of [<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
-<p id="section-5.5-2">The event is not necessarily the same as when the packet is received from the
+<p id="section-5.3-1">The <code>stream_packet_parsed</code> event is emitted when a RoQ packet received from a
+QUIC stream is parsed. It has Core importance level; see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-qlog-main-schema-08#section-92." class="relref">Section 92.</a> of [<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.3-2">The event is not necessarily the same as when the packet is received from the
 QUIC layer. For that see <code>stream_data_moved</code> event in
-<span>[<a href="#I-D.draft-ietf-quic-qlog-quic-events" class="cite xref">I-D.draft-ietf-quic-qlog-quic-events</a>]</span>.<a href="#section-5.5-2" class="pilcrow">¶</a></p>
+<span>[<a href="#I-D.draft-ietf-quic-qlog-quic-events" class="cite xref">I-D.draft-ietf-quic-qlog-quic-events</a>]</span>.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
 <span id="name-roqstreampacketparsed-defin"></span><div id="roq-stream-packet-parsed-def">
-<figure id="figure-6">
-          <div class="lang-cddl sourcecode" id="section-5.5-3.1">
+<figure id="figure-4">
+          <div class="lang-cddl sourcecode" id="section-5.3-3.1">
 <pre>
 RoQStreamPacketParsed = {
     ~RoQPacket
-    ?stream_id: uint64
+    stream_id: uint64
 }
 </pre>
 </div>
-<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
 <a href="#name-roqstreampacketparsed-defin" class="selfRef">RoQStreamPacketParsed definition</a>
           </figcaption></figure>
 </div>
 </section>
 </div>
 <div id="datagram-packet-created">
-<section id="section-5.6">
+<section id="section-5.4">
         <h3 id="name-roq-datagram-packet-created">
-<a href="#section-5.6" class="section-number selfRef">5.6. </a><a href="#name-roq-datagram-packet-created" class="section-name selfRef">RoQ Datagram Packet Created</a>
+<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-roq-datagram-packet-created" class="section-name selfRef">RoQ Datagram Packet Created</a>
         </h3>
-<p id="section-5.6-1">The <code>roq_datagram_packet_created</code> event is emitted when a RoQ packet to be sent
-in a QUIC Datagram is created. It has Core importance level; see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-qlog-main-schema-08#section-9.2" class="relref">Section 9.2</a> of [<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-5.6-1" class="pilcrow">¶</a></p>
-<p id="section-5.6-2">This event is not necessarily the same as when the packet is passed to the QUIC
+<p id="section-5.4-1">The <code>roq_datagram_packet_created</code> event is emitted when a RoQ packet to be sent
+in a QUIC Datagram is created. It has Core importance level; see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-qlog-main-schema-08#section-9.2" class="relref">Section 9.2</a> of [<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-2">This event is not necessarily the same as when the packet is passed to the QUIC
 layer. For that, see the <code>datagram_data_moved</code> event in
-<span>[<a href="#I-D.draft-ietf-quic-qlog-quic-events" class="cite xref">I-D.draft-ietf-quic-qlog-quic-events</a>]</span>.<a href="#section-5.6-2" class="pilcrow">¶</a></p>
+<span>[<a href="#I-D.draft-ietf-quic-qlog-quic-events" class="cite xref">I-D.draft-ietf-quic-qlog-quic-events</a>]</span>.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
 <span id="name-roqdatagrampacketcreated-de"></span><div id="roq-datagram-packet-created-def">
-<figure id="figure-7">
-          <div class="lang-cddl sourcecode" id="section-5.6-3.1">
+<figure id="figure-5">
+          <div class="lang-cddl sourcecode" id="section-5.4-3.1">
 <pre>
 RoQDatagramPacketCreated = {
     ~RoQPacket
 }
 </pre>
 </div>
-<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
 <a href="#name-roqdatagrampacketcreated-de" class="selfRef">RoQDatagramPacketCreated definition</a>
           </figcaption></figure>
 </div>
 </section>
 </div>
 <div id="datagram-packet-parsed">
-<section id="section-5.7">
+<section id="section-5.5">
         <h3 id="name-roq-datagram-packet-parsed">
-<a href="#section-5.7" class="section-number selfRef">5.7. </a><a href="#name-roq-datagram-packet-parsed" class="section-name selfRef">RoQ Datagram Packet Parsed</a>
+<a href="#section-5.5" class="section-number selfRef">5.5. </a><a href="#name-roq-datagram-packet-parsed" class="section-name selfRef">RoQ Datagram Packet Parsed</a>
         </h3>
-<p id="section-5.7-1">The <code>datagram_packet_parsed</code> event is emitted when a RoQ packet received in a
-QUIC Datagram is parsed. It has Core importance level; see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-qlog-main-schema-08#section-92." class="relref">Section 92.</a> of [<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-5.7-1" class="pilcrow">¶</a></p>
-<p id="section-5.7-2">The event is not necessarily the same as when the packet is received from the
+<p id="section-5.5-1">The <code>datagram_packet_parsed</code> event is emitted when a RoQ packet received in a
+QUIC Datagram is parsed. It has Core importance level; see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-qlog-main-schema-08#section-92." class="relref">Section 92.</a> of [<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
+<p id="section-5.5-2">The event is not necessarily the same as when the packet is received from the
 QUIC layer. For that see <code>datagram_data_moved</code> event in
-<span>[<a href="#I-D.draft-ietf-quic-qlog-quic-events" class="cite xref">I-D.draft-ietf-quic-qlog-quic-events</a>]</span>.<a href="#section-5.7-2" class="pilcrow">¶</a></p>
+<span>[<a href="#I-D.draft-ietf-quic-qlog-quic-events" class="cite xref">I-D.draft-ietf-quic-qlog-quic-events</a>]</span>.<a href="#section-5.5-2" class="pilcrow">¶</a></p>
 <span id="name-roqdatagrampacketparsed-def"></span><div id="roq-datagram-packet-parsed-def">
-<figure id="figure-8">
-          <div class="lang-cddl sourcecode" id="section-5.7-3.1">
+<figure id="figure-6">
+          <div class="lang-cddl sourcecode" id="section-5.5-3.1">
 <pre>
 RoQDatagramPacketParsed = {
     ~RoQPacket
 }
 </pre>
 </div>
-<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
 <a href="#name-roqdatagrampacketparsed-def" class="selfRef">RoQDatagramPacketParsed definition</a>
           </figcaption></figure>
 </div>
@@ -1561,7 +1488,7 @@ RoQDatagramPacketParsed = {
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-roq-packet" class="section-name selfRef">RoQ Packet</a>
         </h3>
 <span id="name-roqpacket-definition"></span><div id="roq-packet-def">
-<figure id="figure-9">
+<figure id="figure-7">
           <div class="lang-cddl sourcecode" id="section-6.1-1.1">
 <pre>
 RoQPacket = {
@@ -1570,7 +1497,7 @@ RoQPacket = {
 }
 </pre>
 </div>
-<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
 <a href="#name-roqpacket-definition" class="selfRef">RoQPacket definition</a>
           </figcaption></figure>
 </div>
@@ -1582,7 +1509,7 @@ RoQPacket = {
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-roq-application-error" class="section-name selfRef">RoQ Application Error</a>
         </h3>
 <span id="name-roqapplicationerror-definit"></span><div id="roq-application-error-def">
-<figure id="figure-10">
+<figure id="figure-8">
           <div class="lang-cddl sourcecode" id="section-6.2-1.1">
 <pre>
 RoQApplicationError = "roq_no_error" /
@@ -1595,7 +1522,7 @@ RoQApplicationError = "roq_no_error" /
                       "roq_expectation_unmet_error"
 </pre>
 </div>
-<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
 <a href="#name-roqapplicationerror-definit" class="selfRef">RoQApplicationError definition</a>
           </figcaption></figure>
 </div>
@@ -1654,12 +1581,8 @@ $ApplicationError /= RoQApplicationError
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8610">[RFC8610]</dt>
-      <dd>
-<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Vigano, C.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Data Definition Language (CDDL): A Notational Convention to Express Concise Binary Object Representation (CBOR) and JSON Data Structures"</span>, <span class="seriesInfo">RFC 8610</span>, <span class="seriesInfo">DOI 10.17487/RFC8610</span>, <time datetime="2019-06" class="refDate">June 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8610">https://www.rfc-editor.org/rfc/rfc8610</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC9000">[RFC9000]</dt>
     <dd>
-<span class="refAuthor">Iyengar, J., Ed.</span> and <span class="refAuthor">M. Thomson, Ed.</span>, <span class="refTitle">"QUIC: A UDP-Based Multiplexed and Secure Transport"</span>, <span class="seriesInfo">RFC 9000</span>, <span class="seriesInfo">DOI 10.17487/RFC9000</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9000">https://www.rfc-editor.org/rfc/rfc9000</a>&gt;</span>. </dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Vigano, C.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Data Definition Language (CDDL): A Notational Convention to Express Concise Binary Object Representation (CBOR) and JSON Data Structures"</span>, <span class="seriesInfo">RFC 8610</span>, <span class="seriesInfo">DOI 10.17487/RFC8610</span>, <time datetime="2019-06" class="refDate">June 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8610">https://www.rfc-editor.org/rfc/rfc8610</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1669,7 +1592,8 @@ $ApplicationError /= RoQApplicationError
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="appendix-A-1">TODO acknowledge.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">The authors would like to thank Lucas Pardue for their valuable comments and
+suggestions contributing to this document.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
