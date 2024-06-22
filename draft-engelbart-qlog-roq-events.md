@@ -125,6 +125,8 @@ RoQEventData = RoQStreamOpened /
                RoQStreamPacketParsed /
                RoQDatagramPacketCreated /
                RoQDatagramPacketParsed
+
+$ProtocolEventData /= RoQEventData
 ~~~
 {: #roq-event-data-def title="RoQEventData definition and ProtocolEventData extension" }
 
