@@ -178,6 +178,8 @@ Table of Contents
                   RoQDatagramPacketCreated /
                   RoQDatagramPacketParsed
 
+   $ProtocolEventData /= RoQEventData
+
      Figure 1: RoQEventData definition and ProtocolEventData extension
 
    RoQ events are logged when a certain condition happens at the
