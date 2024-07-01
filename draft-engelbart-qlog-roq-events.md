@@ -1,6 +1,6 @@
 ---
 title: "RoQ qlog event definitions"
-category: info
+category: exp
 
 docname: draft-engelbart-qlog-roq-events-latest
 submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
