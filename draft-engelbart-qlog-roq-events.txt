@@ -3,9 +3,9 @@
 
 
 Network Working Group                                       M. Engelbart
-Internet-Draft                            Technical University of Munich
-Intended status: Informational                              21 June 2024
-Expires: 23 December 2024
+Internet-Draft                                                    J. Ott
+Intended status: Informational            Technical University of Munich
+Expires: 2 January 2025                                      1 July 2024
 
 
                        RoQ qlog event definitions
@@ -46,7 +46,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 December 2024.
+   This Internet-Draft will expire on 2 January 2025.
 
 Copyright Notice
 
@@ -82,7 +82,7 @@ Table of Contents
    8.  IANA Considerations
    9.  Normative References
    Acknowledgments
-   Author's Address
+   Authors' Addresses
 
 1.  Introduction
 
@@ -351,8 +351,13 @@ Acknowledgments
    The authors would like to thank Lucas Pardue for their valuable
    comments and suggestions contributing to this document.
 
-Author's Address
+Authors' Addresses
 
    Mathis Engelbart
    Technical University of Munich
    Email: mathis.engelbart@gmail.com
+
+
+   Jörg Ott
+   Technical University of Munich
+   Email: ott@in.tum.de
