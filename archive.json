@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-02T00:11:42.159402+00:00",
+  "timestamp": "2024-07-04T00:11:26.407515+00:00",
   "repo": "mengelbart/draft-engelbart-qlog-roq-events",
   "labels": [
     {
@@ -60,9 +60,9 @@
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
-      "body": "",
+      "body": "We need to decide if it would be useful to add some RTP/RTCP header fields to the events and if so which fields are relevant. Alternatively, we could add a [RawInfo](https://datatracker.ietf.org/doc/html/draft-ietf-quic-qlog-main-schema#section-7) field to log (parts) of the raw payload.",
       "createdAt": "2024-06-21T15:39:03Z",
-      "updatedAt": "2024-06-21T15:39:03Z",
+      "updatedAt": "2024-07-02T07:43:05Z",
       "closedAt": null,
       "comments": []
     }
