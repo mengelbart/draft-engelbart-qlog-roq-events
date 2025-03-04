@@ -78,7 +78,12 @@ with a category, a name (the concatenation of "category" and "event"), an
 "importance", and "data" fields.
 
 When any event from this document is included in a qlog trace, the
-"protocol_type" qlog array field MUST contain an entry with the value "RoQ".
+"protocol_type" qlog array field MUST contain an entry with the value "ROQ":
+
+~~~cddl
+$ProtocolType /= "ROQ"
+~~~
+{: #protocoltype-extension-roq title="ProtocolType extension for RoQ"}
 
 ## Usage with QUIC
 
@@ -94,12 +99,31 @@ file identifier, potentially suffixed by the vantagepoint type (For example,
 abcd1234_server.qlog would contain the server-side trace of the connection with
 identifier abcd1234).
 
+# Event Schema Definition
+
+This document describes how the RoQ protocol is expressed in qlog with an event
+schema. Per the requirements in {{Section 8 of
+!I-D.draft-ietf-quic-qlog-main-schema}}, this document registers the `roq`
+namespace. The event schema URI is `urn:ietf:params:qlog:events:roq`.
+
+## Draft Event Schema Identification
+
+This section is to be removed before publishing as an RFC.
+
+Only implementations of the final, published RFC can use the events belonging to
+the event schema with the URI `urn:ietf:params:qlog:events:roq`. Until such an
+RFC exists, implementations MUST NOT identify themselves using this URI.
+
+Implementations of draft versions of the event schema MUST append the string "-"
+and the corresponding draft number to the URI. For example, draft 99 of this
+document is identified using the URI `urn:ietf:params:qlog:events:roq-99`.
+
+The namespace identifier itself is not affected by this requirement.
+
 # RoQ Event Overview
 
-This document defines events in the `roq` category.
 
-As described in {{Section 3.4.2 of !I-D.draft-ietf-quic-qlog-main-schema}}, the
-qlog "name" field is the concatenation of category and type.
+# RoQ Events
 
 {{roq-events-tab}} summarizes the name value of each
 event type that is defined in this specification.
@@ -112,9 +136,6 @@ event type that is defined in this specification.
 | roq:datagram_packet_created | Core       | {{datagram-packet-created}} |
 | roq:datagram_packet_parsed  | Core       | {{datagram-packet-parsed}}  |
 {: #roq-events-tab title="RoQ Events"}
-
-
-# RoQ Events
 
 RoQ events extend the `$ProtocolEventData` extension point defined in
 {{!I-D.draft-ietf-quic-qlog-main-schema}}.
