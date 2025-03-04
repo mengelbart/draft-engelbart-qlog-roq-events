@@ -5,7 +5,7 @@
 Network Working Group                                       M. Engelbart
 Internet-Draft                                                    J. Ott
 Intended status: Experimental             Technical University of Munich
-Expires: 2 January 2025                                      1 July 2024
+Expires: 5 September 2025                                   4 March 2025
 
 
                        RoQ qlog event definitions
@@ -46,11 +46,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 January 2025.
+   This Internet-Draft will expire on 5 September 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -68,19 +68,21 @@ Table of Contents
    2.  Conventions and Definitions
    3.  Overview
      3.1.  Usage with QUIC
-   4.  RoQ Event Overview
-   5.  RoQ Events
-     5.1.  RoQ Stream Opened
-     5.2.  RoQ Stream Packet Created
-     5.3.  RoQ Stream Packet Parsed
-     5.4.  RoQ Datagram Packet Created
-     5.5.  RoQ Datagram Packet Parsed
-   6.  RoQ Data Field Definitions
-     6.1.  RoQ Packet
-     6.2.  RoQ Application Error
-   7.  Security Considerations
-   8.  IANA Considerations
-   9.  Normative References
+   4.  Event Schema Definition
+     4.1.  Draft Event Schema Identification
+   5.  RoQ Event Overview
+   6.  RoQ Events
+     6.1.  RoQ Stream Opened
+     6.2.  RoQ Stream Packet Created
+     6.3.  RoQ Stream Packet Parsed
+     6.4.  RoQ Datagram Packet Created
+     6.5.  RoQ Datagram Packet Parsed
+   7.  RoQ Data Field Definitions
+     7.1.  RoQ Packet
+     7.2.  RoQ Application Error
+   8.  Security Considerations
+   9.  IANA Considerations
+   10. Normative References
    Acknowledgments
    Authors' Addresses
 
@@ -122,7 +124,11 @@ Table of Contents
 
    When any event from this document is included in a qlog trace, the
    "protocol_type" qlog array field MUST contain an entry with the value
-   "RoQ".
+   "ROQ":
+
+   $ProtocolType /= "ROQ"
+
+                  Figure 1: ProtocolType extension for RoQ
 
 3.1.  Usage with QUIC
 
@@ -140,13 +146,33 @@ Table of Contents
    example, abcd1234_server.qlog would contain the server-side trace of
    the connection with identifier abcd1234).
 
-4.  RoQ Event Overview
+4.  Event Schema Definition
 
-   This document defines events in the roq category.
+   This document describes how the RoQ protocol is expressed in qlog
+   with an event schema.  Per the requirements in Section 8 of
+   [I-D.draft-ietf-quic-qlog-main-schema], this document registers the
+   roq namespace.  The event schema URI is
+   urn:ietf:params:qlog:events:roq.
 
-   As described in Section 3.4.2 of
-   [I-D.draft-ietf-quic-qlog-main-schema], the qlog "name" field is the
-   concatenation of category and type.
+4.1.  Draft Event Schema Identification
+
+   This section is to be removed before publishing as an RFC.
+
+   Only implementations of the final, published RFC can use the events
+   belonging to the event schema with the URI
+   urn:ietf:params:qlog:events:roq.  Until such an RFC exists,
+   implementations MUST NOT identify themselves using this URI.
+
+   Implementations of draft versions of the event schema MUST append the
+   string "-" and the corresponding draft number to the URI.  For
+   example, draft 99 of this document is identified using the URI
+   urn:ietf:params:qlog:events:roq-99.
+
+   The namespace identifier itself is not affected by this requirement.
+
+5.  RoQ Event Overview
+
+6.  RoQ Events
 
    Table 1 summarizes the name value of each event type that is defined
    in this specification.
@@ -154,20 +180,18 @@ Table of Contents
         +=============================+============+=============+
         | Name value                  | Importance | Definition  |
         +=============================+============+=============+
-        | roq:stream_opened           | Base       | Section 5.1 |
+        | roq:stream_opened           | Base       | Section 6.1 |
         +-----------------------------+------------+-------------+
-        | roq:stream_packet_created   | Core       | Section 5.2 |
+        | roq:stream_packet_created   | Core       | Section 6.2 |
         +-----------------------------+------------+-------------+
-        | roq:stream_packet_parsed    | Core       | Section 5.3 |
+        | roq:stream_packet_parsed    | Core       | Section 6.3 |
         +-----------------------------+------------+-------------+
-        | roq:datagram_packet_created | Core       | Section 5.4 |
+        | roq:datagram_packet_created | Core       | Section 6.4 |
         +-----------------------------+------------+-------------+
-        | roq:datagram_packet_parsed  | Core       | Section 5.5 |
+        | roq:datagram_packet_parsed  | Core       | Section 6.5 |
         +-----------------------------+------------+-------------+
 
                            Table 1: RoQ Events
-
-5.  RoQ Events
 
    RoQ events extend the $ProtocolEventData extension point defined in
    [I-D.draft-ietf-quic-qlog-main-schema].
@@ -180,7 +204,7 @@ Table of Contents
 
    $ProtocolEventData /= RoQEventData
 
-     Figure 1: RoQEventData definition and ProtocolEventData extension
+     Figure 2: RoQEventData definition and ProtocolEventData extension
 
    RoQ events are logged when a certain condition happens at the
    application layer, and there isn't always a one to one mapping
@@ -189,7 +213,7 @@ Table of Contents
    "datagram_data_moved" events in
    [I-D.draft-ietf-quic-qlog-quic-events].
 
-5.1.  RoQ Stream Opened
+6.1.  RoQ Stream Opened
 
    The stream_opened event is emitted when a new QUIC stream for sending
    RoQ packets is opened.  It has Base importance level; see Section 9.2
@@ -200,9 +224,9 @@ Table of Contents
        stream_id: uint64
    }
 
-                    Figure 2: RoQStreamOpened definition
+                    Figure 3: RoQStreamOpened definition
 
-5.2.  RoQ Stream Packet Created
+6.2.  RoQ Stream Packet Created
 
    The stream_packet_created event is emitted when a RoQ packet to be
    sent on a QUIC stream is created.  It has Core importance level; see
@@ -217,9 +241,9 @@ Table of Contents
        stream_id: uint64
    }
 
-                Figure 3: RoQStreamPacketCreated definition
+                Figure 4: RoQStreamPacketCreated definition
 
-5.3.  RoQ Stream Packet Parsed
+6.3.  RoQ Stream Packet Parsed
 
    The stream_packet_parsed event is emitted when a RoQ packet received
    from a QUIC stream is parsed.  It has Core importance level; see
@@ -234,9 +258,9 @@ Table of Contents
        stream_id: uint64
    }
 
-                 Figure 4: RoQStreamPacketParsed definition
+                 Figure 5: RoQStreamPacketParsed definition
 
-5.4.  RoQ Datagram Packet Created
+6.4.  RoQ Datagram Packet Created
 
    The roq_datagram_packet_created event is emitted when a RoQ packet to
    be sent in a QUIC Datagram is created.  It has Core importance level;
@@ -250,9 +274,9 @@ Table of Contents
        ~RoQPacket
    }
 
-               Figure 5: RoQDatagramPacketCreated definition
+               Figure 6: RoQDatagramPacketCreated definition
 
-5.5.  RoQ Datagram Packet Parsed
+6.5.  RoQ Datagram Packet Parsed
 
    The datagram_packet_parsed event is emitted when a RoQ packet
    received in a QUIC Datagram is parsed.  It has Core importance level;
@@ -266,22 +290,22 @@ Table of Contents
        ~RoQPacket
    }
 
-                Figure 6: RoQDatagramPacketParsed definition
+                Figure 7: RoQDatagramPacketParsed definition
 
-6.  RoQ Data Field Definitions
+7.  RoQ Data Field Definitions
 
    The following data field definitions can be used in RoQ events.
 
-6.1.  RoQ Packet
+7.1.  RoQ Packet
 
    RoQPacket = {
      flow_id: uint64
      length: uint64
    }
 
-                       Figure 7: RoQPacket definition
+                       Figure 8: RoQPacket definition
 
-6.2.  RoQ Application Error
+7.2.  RoQ Application Error
 
    RoQApplicationError = "roq_no_error" /
                          "roq_general_error" /
@@ -292,7 +316,7 @@ Table of Contents
                          "roq_unknown_flow_id_error" /
                          "roq_expectation_unmet_error"
 
-                  Figure 8: RoQApplicationError definition
+                  Figure 9: RoQApplicationError definition
 
    The RoQApplicationError extends the general $ApplicationError
    definition in the qlog QUIC definition, see
@@ -300,38 +324,39 @@ Table of Contents
 
    $ApplicationError /= RoQApplicationError
 
-7.  Security Considerations
+8.  Security Considerations
 
    The security and privacy considerations discussed in
    [I-D.draft-ietf-quic-qlog-main-schema] apply to this document as
    well.
 
-8.  IANA Considerations
+9.  IANA Considerations
 
    TODO
 
-9.  Normative References
+10.  Normative References
 
    [I-D.draft-ietf-avtcore-rtp-over-quic]
-              Ott, J., Engelbart, M., and S. Dawkins, "RTP over QUIC
+              Engelbart, M., Ott, J., and S. Dawkins, "RTP over QUIC
               (RoQ)", Work in Progress, Internet-Draft, draft-ietf-
-              avtcore-rtp-over-quic-10, 8 May 2024,
+              avtcore-rtp-over-quic-13, 26 February 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-avtcore-
-              rtp-over-quic-10>.
+              rtp-over-quic-13>.
 
    [I-D.draft-ietf-quic-qlog-main-schema]
-              Marx, R., Niccolini, L., Seemann, M., and L. Pardue, "Main
-              logging schema for qlog", Work in Progress, Internet-
-              Draft, draft-ietf-quic-qlog-main-schema-08, 4 March 2024,
+              Marx, R., Niccolini, L., Seemann, M., and L. Pardue,
+              "qlog: Structured Logging for Network Protocols", Work in
+              Progress, Internet-Draft, draft-ietf-quic-qlog-main-
+              schema-10, 21 October 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
-              qlog-main-schema-08>.
+              qlog-main-schema-10>.
 
    [I-D.draft-ietf-quic-qlog-quic-events]
               Marx, R., Niccolini, L., Seemann, M., and L. Pardue, "QUIC
               event definitions for qlog", Work in Progress, Internet-
-              Draft, draft-ietf-quic-qlog-quic-events-07, 4 March 2024,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
-              qlog-quic-events-07>.
+              Draft, draft-ietf-quic-qlog-quic-events-09, 21 October
+              2024, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              quic-qlog-quic-events-09>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
