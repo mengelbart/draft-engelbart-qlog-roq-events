@@ -1338,8 +1338,13 @@ document is identified using the URI <code>urn:ietf:params:qlog:events:roq-99</c
       <h2 id="name-roq-events">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-roq-events" class="section-name selfRef">RoQ Events</a>
       </h2>
-<p id="section-6-1"><a href="#roq-events-tab" class="auto internal xref">Table 1</a> summarizes the name value of each
-event type that is defined in this specification.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">RoQ events extend the <code>$ProtocolEventData</code> extension point defined in
+<span>[<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>. Additionally, they allow for direct
+extensibility by their use of per-event extension points via the <code>$$</code> CDDL
+"group socket" syntax, as also described in
+<span>[<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2"><a href="#roq-events-tab" class="auto internal xref">Table 1</a> summarizes the name value of each
+event type that is defined in this specification.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <span id="name-roq-events-2"></span><div id="roq-events-tab">
 <table class="center" id="table-1">
         <caption>
@@ -1356,7 +1361,7 @@ event type that is defined in this specification.<a href="#section-6-1" class="p
         <tbody>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">roq:stream_opened</td>
-            <td class="text-left" rowspan="1" colspan="1">Base</td>
+            <td class="text-left" rowspan="1" colspan="1">Core</td>
             <td class="text-left" rowspan="1" colspan="1">
               <a href="#stream-opened" class="auto internal xref">Section 6.1</a>
 </td>
@@ -1392,8 +1397,6 @@ event type that is defined in this specification.<a href="#section-6-1" class="p
         </tbody>
       </table>
 </div>
-<p id="section-6-3">RoQ events extend the <code>$ProtocolEventData</code> extension point defined in
-<span>[<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-6-3" class="pilcrow">¶</a></p>
 <span id="name-roqeventdata-definition-and"></span><div id="roq-event-data-def">
 <figure id="figure-2">
         <div class="lang-cddl sourcecode" id="section-6-4.1">
@@ -1422,7 +1425,7 @@ exchange of data between the RoQ and QUIC layer is logged via the
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-roq-stream-opened" class="section-name selfRef">RoQ Stream Opened</a>
         </h3>
 <p id="section-6.1-1">The <code>stream_opened</code> event is emitted when a new QUIC stream for sending RoQ
-packets is opened. It has Base importance level; see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-qlog-main-schema-10#section-9.2" class="relref">Section 9.2</a> of [<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+packets is opened. It has Core importance level; see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-qlog-main-schema-10#section-9.2" class="relref">Section 9.2</a> of [<a href="#I-D.draft-ietf-quic-qlog-main-schema" class="cite xref">I-D.draft-ietf-quic-qlog-main-schema</a>]</span>.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <span id="name-roqstreamopened-definition"></span><div id="roq-stream-opened-def">
 <figure id="figure-3">
           <div class="lang-cddl sourcecode" id="section-6.1-2.1">
@@ -1430,6 +1433,8 @@ packets is opened. It has Base importance level; see <span><a href="https://data
 RoQStreamOpened = {
     flow_id: uint64
     stream_id: uint64
+
+    * $$roq-streamopened-extension
 }
 </pre>
 </div>
@@ -1454,8 +1459,10 @@ layer. For that, see the <code>stream_data_moved</code> event in
           <div class="lang-cddl sourcecode" id="section-6.2-3.1">
 <pre>
 RoQStreamPacketCreated = {
-    ~RoQPacket
     stream_id: uint64
+    message: $RoQPacket
+
+    * $$roq-streampacketcreated-extension
 }
 </pre>
 </div>
@@ -1480,8 +1487,10 @@ QUIC layer. For that see <code>stream_data_moved</code> event in
           <div class="lang-cddl sourcecode" id="section-6.3-3.1">
 <pre>
 RoQStreamPacketParsed = {
-    ~RoQPacket
     stream_id: uint64
+    message: $RoQPacket
+
+    * $$roq-streampacketparsed-extension
 }
 </pre>
 </div>
@@ -1506,7 +1515,9 @@ layer. For that, see the <code>datagram_data_moved</code> event in
           <div class="lang-cddl sourcecode" id="section-6.4-3.1">
 <pre>
 RoQDatagramPacketCreated = {
-    ~RoQPacket
+    message: $RoQPacket
+
+    * $$roq-datagrampacketcreated-extension
 }
 </pre>
 </div>
@@ -1531,7 +1542,9 @@ QUIC layer. For that see <code>datagram_data_moved</code> event in
           <div class="lang-cddl sourcecode" id="section-6.5-3.1">
 <pre>
 RoQDatagramPacketParsed = {
-    ~RoQPacket
+    message: $RoQPacket
+
+    * $$roq-datagrampacketparsed-extension
 }
 </pre>
 </div>
@@ -1560,7 +1573,8 @@ RoQDatagramPacketParsed = {
 <pre>
 RoQPacket = {
   flow_id: uint64
-  length: uint64
+  ? length: uint64
+  ? raw: RawInfo
 }
 </pre>
 </div>

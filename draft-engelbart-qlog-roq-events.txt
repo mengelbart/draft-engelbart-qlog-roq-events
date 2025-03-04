@@ -174,13 +174,19 @@ Table of Contents
 
 6.  RoQ Events
 
+   RoQ events extend the $ProtocolEventData extension point defined in
+   [I-D.draft-ietf-quic-qlog-main-schema].  Additionally, they allow for
+   direct extensibility by their use of per-event extension points via
+   the $$ CDDL "group socket" syntax, as also described in
+   [I-D.draft-ietf-quic-qlog-main-schema].
+
    Table 1 summarizes the name value of each event type that is defined
    in this specification.
 
         +=============================+============+=============+
         | Name value                  | Importance | Definition  |
         +=============================+============+=============+
-        | roq:stream_opened           | Base       | Section 6.1 |
+        | roq:stream_opened           | Core       | Section 6.1 |
         +-----------------------------+------------+-------------+
         | roq:stream_packet_created   | Core       | Section 6.2 |
         +-----------------------------+------------+-------------+
@@ -192,9 +198,6 @@ Table of Contents
         +-----------------------------+------------+-------------+
 
                            Table 1: RoQ Events
-
-   RoQ events extend the $ProtocolEventData extension point defined in
-   [I-D.draft-ietf-quic-qlog-main-schema].
 
    RoQEventData = RoQStreamOpened /
                   RoQStreamPacketCreated /
@@ -216,12 +219,14 @@ Table of Contents
 6.1.  RoQ Stream Opened
 
    The stream_opened event is emitted when a new QUIC stream for sending
-   RoQ packets is opened.  It has Base importance level; see Section 9.2
+   RoQ packets is opened.  It has Core importance level; see Section 9.2
    of [I-D.draft-ietf-quic-qlog-main-schema].
 
    RoQStreamOpened = {
        flow_id: uint64
        stream_id: uint64
+
+       * $$roq-streamopened-extension
    }
 
                     Figure 3: RoQStreamOpened definition
@@ -237,8 +242,10 @@ Table of Contents
    [I-D.draft-ietf-quic-qlog-quic-events].
 
    RoQStreamPacketCreated = {
-       ~RoQPacket
        stream_id: uint64
+       message: $RoQPacket
+
+       * $$roq-streampacketcreated-extension
    }
 
                 Figure 4: RoQStreamPacketCreated definition
@@ -254,8 +261,10 @@ Table of Contents
    [I-D.draft-ietf-quic-qlog-quic-events].
 
    RoQStreamPacketParsed = {
-       ~RoQPacket
        stream_id: uint64
+       message: $RoQPacket
+
+       * $$roq-streampacketparsed-extension
    }
 
                  Figure 5: RoQStreamPacketParsed definition
@@ -271,7 +280,9 @@ Table of Contents
    [I-D.draft-ietf-quic-qlog-quic-events].
 
    RoQDatagramPacketCreated = {
-       ~RoQPacket
+       message: $RoQPacket
+
+       * $$roq-datagrampacketcreated-extension
    }
 
                Figure 6: RoQDatagramPacketCreated definition
@@ -287,7 +298,9 @@ Table of Contents
    [I-D.draft-ietf-quic-qlog-quic-events].
 
    RoQDatagramPacketParsed = {
-       ~RoQPacket
+       message: $RoQPacket
+
+       * $$roq-datagrampacketparsed-extension
    }
 
                 Figure 7: RoQDatagramPacketParsed definition
@@ -300,7 +313,8 @@ Table of Contents
 
    RoQPacket = {
      flow_id: uint64
-     length: uint64
+     ? length: uint64
+     ? raw: RawInfo
    }
 
                        Figure 8: RoQPacket definition
