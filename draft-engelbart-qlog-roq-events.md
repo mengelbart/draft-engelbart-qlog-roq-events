@@ -125,20 +125,23 @@ The namespace identifier itself is not affected by this requirement.
 
 # RoQ Events
 
+RoQ events extend the `$ProtocolEventData` extension point defined in
+{{!I-D.draft-ietf-quic-qlog-main-schema}}. Additionally, they allow for direct
+extensibility by their use of per-event extension points via the `$$` CDDL
+"group socket" syntax, as also described in
+{{!I-D.draft-ietf-quic-qlog-main-schema}}.
+
 {{roq-events-tab}} summarizes the name value of each
 event type that is defined in this specification.
 
 | Name value                  | Importance | Definition                  |
 | --------------------------- | ---------- | --------------------------- |
-| roq:stream_opened           | Base       | {{stream-opened}}           |
+| roq:stream_opened           | Core       | {{stream-opened}}           |
 | roq:stream_packet_created   | Core       | {{stream-packet-created}}   |
 | roq:stream_packet_parsed    | Core       | {{stream-packet-parsed}}    |
 | roq:datagram_packet_created | Core       | {{datagram-packet-created}} |
 | roq:datagram_packet_parsed  | Core       | {{datagram-packet-parsed}}  |
 {: #roq-events-tab title="RoQ Events"}
-
-RoQ events extend the `$ProtocolEventData` extension point defined in
-{{!I-D.draft-ietf-quic-qlog-main-schema}}.
 
 ~~~ cddl
 RoQEventData = RoQStreamOpened /
@@ -160,13 +163,15 @@ exchange of data between the RoQ and QUIC layer is logged via the
 ## RoQ Stream Opened {#stream-opened}
 
 The `stream_opened` event is emitted when a new QUIC stream for sending RoQ
-packets is opened. It has Base importance level; see {{Section 9.2 of
+packets is opened. It has Core importance level; see {{Section 9.2 of
 !I-D.draft-ietf-quic-qlog-main-schema}}.
 
 ~~~ cddl
 RoQStreamOpened = {
     flow_id: uint64
     stream_id: uint64
+
+    * $$roq-streamopened-extension
 }
 ~~~
 {: #roq-stream-opened-def title="RoQStreamOpened definition" }
@@ -183,8 +188,10 @@ layer. For that, see the `stream_data_moved` event in
 
 ~~~ cddl
 RoQStreamPacketCreated = {
-    ~RoQPacket
     stream_id: uint64
+    message: $RoQPacket
+
+    * $$roq-streampacketcreated-extension
 }
 ~~~
 {: #roq-stream-packet-created-def title="RoQStreamPacketCreated definition" }
@@ -201,8 +208,10 @@ QUIC layer. For that see `stream_data_moved` event in
 
 ~~~ cddl
 RoQStreamPacketParsed = {
-    ~RoQPacket
     stream_id: uint64
+    message: $RoQPacket
+
+    * $$roq-streampacketparsed-extension
 }
 ~~~
 {: #roq-stream-packet-parsed-def title="RoQStreamPacketParsed definition" }
@@ -219,7 +228,9 @@ layer. For that, see the `datagram_data_moved` event in
 
 ~~~ cddl
 RoQDatagramPacketCreated = {
-    ~RoQPacket
+    message: $RoQPacket
+
+    * $$roq-datagrampacketcreated-extension
 }
 ~~~
 {: #roq-datagram-packet-created-def title="RoQDatagramPacketCreated definition" }
@@ -236,7 +247,9 @@ QUIC layer. For that see `datagram_data_moved` event in
 
 ~~~ cddl
 RoQDatagramPacketParsed = {
-    ~RoQPacket
+    message: $RoQPacket
+
+    * $$roq-datagrampacketparsed-extension
 }
 ~~~
 {: #roq-datagram-packet-parsed-def title="RoQDatagramPacketParsed definition" }
@@ -250,7 +263,8 @@ The following data field definitions can be used in RoQ events.
 ~~~ cddl
 RoQPacket = {
   flow_id: uint64
-  length: uint64
+  ? length: uint64
+  ? raw: RawInfo
 }
 ~~~
 {: #roq-packet-def title="RoQPacket definition"}
